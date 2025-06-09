@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lagrange Multiplier Solver</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+      margin: 0;
+      padding: 40px;
+    }
+
+    .layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .container, .example {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      flex: 1 1 400px;
+      max-width: 500px;
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #00796b;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 14px;
+      background-color: #00796b;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #004d40;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin-top: 15px;
+    }
+
+    li {
+      background-color: #e8f5e9;
+      padding: 10px;
+      margin-bottom: 8px;
+      border-left: 5px solid #66bb6a;
+      border-radius: 6px;
+      font-family: monospace;
+    }
+
+    .example-content {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .example h3 {
+      color: #388e3c;
+      text-align: left;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+
+  <script>
+    function fillExample() {
+      document.querySelector('input[name="functionInput"]').value = "3*x + 4*y";
+      document.querySelector('input[name="constraintInput"]').value = "x**2 + y**2 - 1";
+    }
+  </script>
+</head>
+<body>
+  <div class="layout">
+    <!-- Solver Form -->
+    <div class="container">
+      <h2>Lagrange Multiplier Optimizer</h2>
+      <form method="POST" action="/">
+        <label for="functionInput">Objective Function f(x, y):</label>
+        <input type="text" name="functionInput" placeholder="e.g. x**2 + y**2" required>
+
+        <label for="constraintInput">Constraint g(x, y) = 0:</label>
+        <input type="text" name="constraintInput" placeholder="e.g. x + y - 1" required>
+
+        <button type="submit">Submit</button>
+        <button type="button" onclick="fillExample()">Load Example</button>
+      </form>
+
+      {% if result %}
+        <h3>Solution Points:</h3>
+        <ul>
+          {% for point in result %}
+            <li>{{ point }}</li>
+          {% endfor %}
+        </ul>
+
+        <h3>
+          MAXIMA at {{max}}<br>
+          MINIMA at {{min}}
+        </h3>
+      {% endif %}
+    </div>
+
+    <!-- Example Section -->
+    <div class="example">
+      <h2>Example Problem</h2>
+      <div class="example-content">
+        <p><strong>Problem:</strong> Find the maximum and minimum values of the function:</p>
+        <p><code>f(x, y) = 3x + 4y</code></p>
+        <p>subject to the constraint:</p>
+        <p><code>x² + y² = 1</code></p>
+        <p>This tool uses the <strong>Lagrange multiplier method</strong> to solve such constrained optimization problems. Click <strong>“Load Example”</strong> to try it instantly!</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
